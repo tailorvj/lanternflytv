@@ -1,0 +1,29 @@
+{
+    "extends": ["airbnb-base", "prettier"],
+    "plugins": ["prettier"],
+    "rules": {
+        "prettier/prettier": "error",
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "no-console": "off"
+    },
+    "env": {
+        "es6": true
+    },
+    "overrides": [
+        {
+            "files": ["main/**/*.js"],
+            "env": {
+                "node": true
+            }
+        },
+        {
+            "files": ["renderer/**/*.js"],
+            "env": {
+                "browser": true
+            },
+            "globals": {
+                "firebase": "readonly"
+            }            
+        }
+    ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "lanternflytv",
+  "productName": "LanternFlyTV",
+  "version": "0.0.1",
+  "description": "Full screen cloud managed browser. Proof of concept",
+  "main": "src/main/main.js",
+  "scripts": {
+    "lint": "eslint ./src/",
+    "lint:fix": "eslint ./src/ --fix",
+    "start": "electron .",
+    "clean": "rimraf dist",
+    "bundle:x64": "electron-packager . lanternflytv --platform linux --arch x64 --out dist/",
+    "bundle:arm64": "electron-packager . lanternflytv --platform linux --arch arm64 --out=dist/",
+    "deb:x64": "electron-installer-debian --src dist/lanternflytv-linux-x64/ --arch amd64 --config config.json",
+    "deb:arm64": "electron-installer-debian --src dist/lanternflytv-linux-arm64/ --arch arm64 --config config.json",
+    "build:x64": "npm run clean && npm run bundle:x64 && npm run deb:x64",
+    "build:arm64": "npm run clean && npm run bundle:arm64 && npm run deb:arm64"
+  },
+  "repository": "https://github.com/tailorvj/lanternflytv.git",
+  "keywords": [
+    "Electron",
+    "FullPageOS",
+    "browser",
+    "screen",
+    "rotation",
+    "Firebase",
+    "LanternFlyTV",
+    "LanternFly"
+  ],
+  "author": "TailorVJ",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "^25.3.1",
+    "electron-installer-debian": "^3.1.0",
+    "electron-packager": "^17.1.1",
+    "eslint": "^8.45.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.9.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.1"
+  }
+}
