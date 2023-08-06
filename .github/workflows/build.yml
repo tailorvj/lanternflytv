@@ -36,8 +36,12 @@ jobs:
             npm ci
             npm run lint
             npm run build:arm64
+          copy_artifact_path: dist/installers/lanternflytv_*.deb
+      - name: Archive production artifacts
+        run: |
+          tar -czvf dist/installers/package-${{ matrix.arch }}.tar.gz dist/installers/lanternflytv_*.deb
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: package-${{ matrix.arch }}
-          path: dist/**/*
+          path: dist/installers/package-${{ matrix.arch }}.tar.gz
