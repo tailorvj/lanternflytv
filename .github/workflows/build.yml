@@ -24,24 +24,33 @@ jobs:
         run: npm run build:x64
         if: matrix.arch == 'ubuntu-latest'
       - name: Arm Build
+        id: arm_build
         if: matrix.arch != 'ubuntu-latest'
         uses: pguyot/arm-runner-action@v2
         with:
           base_image: ${{ matrix.arch }}
           cpu: cortex-a53
           image_additional_mb: 5000
+          copy_artifact_path: dist/installers
           commands: |
             curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
             apt-get install -y nodejs
+            pwd
             npm ci
             npm run lint
             npm run build:arm64
-          copy_artifact_path: dist/installers/lanternflytv_*.deb
+            tar -czvf dist/installers/package-${{ matrix.arch }}.tar.gz dist/installers/lanternflytv_*.deb
+            ls -R dist
       - name: Archive production artifacts
+        if: matrix.arch != 'ubuntu-latest'
         run: |
-          tar -czvf dist/installers/package-${{ matrix.arch }}.tar.gz dist/installers/lanternflytv_*.deb
-      - name: Upload Artifacts
+          pwd
+          ls -R dist
+          echo "Artifact name: package-${{ matrix.arch }}"
+          echo "Artifact path: ${{ steps.arm_build.outputs.artifact }}"
+      - name: Upload artifacts
         uses: actions/upload-artifact@v2
+        if: matrix.arch != 'ubuntu-latest'
         with:
           name: package-${{ matrix.arch }}
-          path: dist/installers/package-${{ matrix.arch }}.tar.gz
+          path: ${{ steps.arm_build.outputs.artifact }}
