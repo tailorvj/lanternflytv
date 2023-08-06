@@ -1,0 +1,40 @@
+name: Build Linux Binaries for x64 and arm64
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        arch: ["ubuntu-latest", "raspi_4_bullseye:20230102"]
+    runs-on: ${{ matrix.arch == 'ubuntu-latest' && matrix.arch || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Build x64
+        run: npm run build:x64
+        if: matrix.arch == 'ubuntu-latest'
+      - name: Build arm64
+        run: npm run build:arm64
+        if: matrix.arch != 'ubuntu-latest'
+      - name: Arm Build
+        if: matrix.arch != 'ubuntu-latest'
+        uses: pguyot/arm-runner-action@v2
+        with:
+          base_image: ${{ matrix.arch }}
+          cpu: cortex-a53
+          commands: |
+            curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+            apt-get install -y nodejs
+            npm ci
+            npm run lint
+            npm run build:arm64
