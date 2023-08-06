@@ -23,9 +23,6 @@ jobs:
       - name: Build x64
         run: npm run build:x64
         if: matrix.arch == 'ubuntu-latest'
-      - name: Build arm64
-        run: npm run build:arm64
-        if: matrix.arch != 'ubuntu-latest'
       - name: Arm Build
         if: matrix.arch != 'ubuntu-latest'
         uses: pguyot/arm-runner-action@v2
@@ -39,3 +36,8 @@ jobs:
             npm ci
             npm run lint
             npm run build:arm64
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: package-${{ matrix.arch }}
+          path: dist/**/*
