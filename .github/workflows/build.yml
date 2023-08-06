@@ -32,6 +32,7 @@ jobs:
         with:
           base_image: ${{ matrix.arch }}
           cpu: cortex-a53
+          image_additional_mb: 5000
           commands: |
             curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
             apt-get install -y nodejs
