@@ -14,6 +14,7 @@ jobs:
         with:
           base_image: "raspios_lite_arm64:latest"
           cpu: "cortex-a53"
+          image_additional_mb: 5000
           copy_artifact_path: dist/installers/lanternflytv_0.0.1_amd64.deb
           commands: |
             curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
