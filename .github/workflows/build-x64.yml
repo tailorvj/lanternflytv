@@ -2,7 +2,7 @@ name: Build Linux Binaries for x64
 
 on:
   push:
-    branches: [build]
+    branches: [main]
 
 jobs:
   build:
@@ -21,18 +21,10 @@ jobs:
         run: npm run build:x64
       - name: Archive production artifacts
         run: |
-          tar -czvf dist/installers/package-lanternfly-x64.tar.gz dist/installers/lanternflytv_*.deb
-          echo "ls -R dist/installers: "
-          ls -R dist/installers
-      - name: Debug production artifacts
-        run: |
-          pwd
-          echo "ls dist/installers: "
-          ls dist/installers
-          echo "Artifact name: package-lanternfly-x64"
-          echo "Artifact path: dist/installers/package-lanternfly-x64.tar.gz"
+          cd dist/installers
+          tar -czvf package-lanternflytv-x64.tar.gz lanternflytv_*.deb
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: package-lanternfly-x64
-          path: dist/installers/package-lanternfly-x64.tar.gz
+          name: package-lanternflytv-x64
+          path: dist/installers/package-lanternflytv-x64.tar.gz
