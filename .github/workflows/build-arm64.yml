@@ -15,7 +15,7 @@ jobs:
           base_image: "raspios_lite_arm64:latest"
           cpu: "cortex-a53"
           image_additional_mb: 5000
-          copy_artifact_path: dist/installers/lanternflytv_0.0.1_amd64.deb
+          copy_artifact_path: dist/installers/lanternflytv_0.0.1_arm64.deb
           commands: |
             curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
             apt-get install -y nodejs
@@ -25,9 +25,9 @@ jobs:
             npm run build:arm64
       - name: Test artifact was copied
         run: |
-          test -f lanternflytv_0.0.1_amd64.deb
+          test -f lanternflytv_0.0.1_arm64.deb
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: lanternflytv_0.0.1_amd64
-          path: lanternflytv_0.0.1_amd64.deb
+          name: lanternflytv_0.0.1_arm64
+          path: lanternflytv_0.0.1_arm64.deb
