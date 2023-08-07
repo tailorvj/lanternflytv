@@ -14,14 +14,15 @@ jobs:
         with:
           base_image: "raspios_lite_arm64:latest"
           cpu: "cortex-a53"
-          copy_artifact_path: artifact.txt
+          copy_artifact_path: dist/installers/artifact.txt
           commands: |
-            echo "This is a test artifact created in ARM environment." > artifact.txt
+            mkdir -p dist/installers
+            echo "This is a test artifact created in ARM environment." > dist/installers/artifact.txt
       - name: Test artifact was copied
         run: |
-          test -f artifact.txt
+          test -f dist/installers/artifact.txt
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: artifact
-          path: artifact.txt
+          path: dist/installers/artifact.txt
