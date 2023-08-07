@@ -14,7 +14,7 @@ jobs:
       - name: Extract package data
         run: |
           echo "APP_NAME=$(jq -r .name $PACKAGE_JSON_PATH)" >> $GITHUB_ENV
-          echo "APP_VERSION=$(jq -r .version $PACKAGE_JSON_PATH | tr '-' '_')" >> $GITHUB_ENV
+          echo "APP_VERSION=$(jq -r .version $PACKAGE_JSON_PATH)" >> $GITHUB_ENV
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
