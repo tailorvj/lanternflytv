@@ -1,4 +1,4 @@
-name: Test arm-runner-action artifact copy
+name: Build Linux Binaries for arm64
 on:
   push:
     branches:
@@ -14,15 +14,19 @@ jobs:
         with:
           base_image: "raspios_lite_arm64:latest"
           cpu: "cortex-a53"
-          copy_artifact_path: dist/installers/artifact.txt
+          copy_artifact_path: dist/installers/lanternflytv_0.0.1_amd64.deb
           commands: |
-            mkdir -p dist/installers
-            echo "This is a test artifact created in ARM environment." > dist/installers/artifact.txt
+            curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+            apt-get install -y nodejs
+            pwd
+            npm ci
+            npm run lint
+            npm run build:arm64
       - name: Test artifact was copied
         run: |
-          test -f artifact.txt
+          test -f lanternflytv_0.0.1_amd64.deb
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: artifact
-          path: artifact.txt
+          name: lanternflytv_0.0.1_amd64
+          path: lanternflytv_0.0.1_amd64.deb
