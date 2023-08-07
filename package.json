@@ -1,7 +1,7 @@
 {
   "name": "lanternflytv",
   "productName": "LanternFlyTV",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1",
   "description": "Full screen cloud managed browser. Proof of concept",
   "main": "src/main/main.js",
   "scripts": {
