@@ -31,7 +31,7 @@ jobs:
           base_image: ${{ matrix.arch }}
           cpu: cortex-a53
           image_additional_mb: 5000
-          copy_artifact_path: dist/installers/package-${{ matrix.arch }}.tar.gz
+          copy_artifact_path: dist/installers/package-lanternfly-arm64.tar.gz
           copy_artifact_dest: artifacts
           commands: |
             curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
@@ -40,18 +40,24 @@ jobs:
             npm ci
             npm run lint
             npm run build:arm64
-            tar -czvf dist/installers/package-${{ matrix.arch }}.tar.gz dist/installers/lanternflytv_*.deb
+            tar -czvf dist/installers/package-lanternfly-arm64.tar.gz dist/installers/lanternflytv_*.deb
+            echo "ls -R dist/installers: "
             ls -R dist/installers
+            echo "ls artifacts: "
+            ls artifacts
       - name: Debug production artifacts
         if: matrix.arch != 'ubuntu-latest'
         run: |
           pwd
+          echo "ls artifacts: "
           ls artifacts
-          echo "Artifact name: package-${{ matrix.arch }}"
-          echo "Artifact path: artifacts/package-${{ matrix.arch }}.tar.gz"
+          echo "ls ../artifacts: "
+          ls ../artifacts
+          echo "Artifact name: package-lanternfly-arm64"
+          echo "Artifact path: artifacts"
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         if: matrix.arch != 'ubuntu-latest'
         with:
-          name: package-${{ matrix.arch }}
-          path: artifacts/package-${{ matrix.arch }}.tar.gz
+          name: package-lanternfly-arm64
+          path: artifacts
