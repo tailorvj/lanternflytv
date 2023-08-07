@@ -12,6 +12,7 @@ This is a minimal Electron browser that connects to Firebase in the background a
 - Get a list of URLs from Firebase
 - Display the URLs in a full screen browser
 - Rotate through the URLs in a playlist
+- Auotmatic x64 and arm64 builds from build branch
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
@@ -19,7 +20,6 @@ To clone and run this repository you'll need [Git](https://git-scm.com) and [Nod
 
 - Automatic browser onboarding from Firebase
 - Screen Group management web app
-- Automatic builds via Github Actions - testing already in this repo on main
 
 ### Known issues:
 
